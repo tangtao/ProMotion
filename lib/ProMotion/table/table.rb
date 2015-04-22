@@ -300,6 +300,11 @@ module ProMotion
       view = section[:title_view]
       view = section[:title_view].new if section[:title_view].respond_to?(:new)
       view.title = section[:title] if view.respond_to?(:title=)
+
+      after_proc = section[:after_title_view]
+      if after_proc && after_proc.respond_to?(:call)
+        after_proc.call(view)
+      end
       view
     end
 

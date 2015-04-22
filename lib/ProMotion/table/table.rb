@@ -156,6 +156,12 @@ module ProMotion
         new_cell.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin
         new_cell.clipsToBounds = true # fix for changed default in 7.1
         new_cell.send(:on_load) if new_cell.respond_to?(:on_load)
+
+        after_proc = data_cell[:after_cell]
+        if after_proc && after_proc.respond_to?(:call)
+          after_proc.call(new_cell)
+        end
+
         new_cell
       end
       table_cell.setup(data_cell, self) if table_cell.respond_to?(:setup)
